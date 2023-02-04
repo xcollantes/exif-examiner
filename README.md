@@ -33,7 +33,7 @@ recursively and all image files only underneath the target will be targeted.
 
 ## Example
 
-Show device related exif metadata for all images given a path:
+### Show device related exif metadata for all images given a path
 
 ```shell
 $ env/bin/python3 examine.py --target my/directory/path/ --action device
@@ -50,17 +50,17 @@ gps_latitude: (57.0, 18.0, 4.6606)
 gps_latitude_ref: N
 gps_longitude_ref: W
 gps_longitude: (4.0, 28.0, 9.2424)
-/mnt/c/Users/sergey/Documents/exif-examiner/example.jpg
+/mnt/c/Users/xcollantes/Documents/exif-examiner/example.jpg
 https://google.com/maps/place/57%C2%BA18%274.6606%22N+4%C2%BA28%279.2424%22W
 ```
 
-Clear all exif metadata for one image file:
+### Clear all exif metadata for one image file
 
 ```shell
 $ env/bin/python3 examine.py --target myimage.png --action remove
 ```
 
-Clear all exif metadata for one all image files given a path:
+### Clear all exif metadata for one all image files given a path
 
 ```shell
 $ env/bin/python3 examine.py --target my/directory/path/ --action remove

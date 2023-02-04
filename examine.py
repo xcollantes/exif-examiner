@@ -7,6 +7,9 @@ import urllib.parse
 
 from absl import app, flags, logging
 from exif import Image
+from PIL import Image
+from PIL.PngImagePlugin import PngImageFile, PngInfo
+
 
 logging.get_absl_handler().setFormatter(None)
 
@@ -35,8 +38,15 @@ def main(_):
 
 def action_file(path: str, selection: str) -> None:
     """Perform action depending on user."""
-    if imghdr.what(path):
-        selection: str = selection.strip().upper()
+    selection: str = selection.strip().upper()
+    img_type: str = imghdr.what(path)
+
+    if img_type == "png":
+        if selection == "REMOVE":
+            remove_png_metadata(path)
+        else:
+            get_all_png_metadata(path)
+    elif img_type:
         if selection == "DEVICE":
             get_device(path)
         elif selection == "REMOVE":
@@ -92,6 +102,21 @@ def show(path: str) -> None:
     logging.info("%s", os.path.basename(path))
     for data in img.list_all():
         logging.info("%s: %s", data, img.get(data))
+
+
+def get_all_png_metadata(path: str) -> None:
+    """Get all PNG metadata since PNG is not supported by exif library."""
+    img = PngImageFile(path)
+    for field in img.info:
+        logging.info("%s: %s", field, img.info[field])
+
+
+def remove_png_metadata(path: str) -> None:
+    """Remove PNG metadata since PNG is not supported by exif library."""
+    img = PngImageFile(path)
+    fresh_img: Image = Image.new(img.mode, img.size)
+    fresh_img.putdata(list(img.getdata()))
+    fresh_img.save(path)
 
 
 def format_geo_link(long: tuple[float, float, float], long_ref: str,
