@@ -97,9 +97,12 @@ def show(path: str) -> None:
 def format_geo_link(long: tuple[float, float, float], long_ref: str,
                     lat: tuple[float, float, float], lat_ref: str) -> str:
     """Returns a map link to open in browser for image location."""
-    maps: str = "https://google.com/maps/place/"
-    link = f"{long[0]:.0f}º{long[1]:.0f}'{long[2]}\"{long_ref} {lat[0]:.0f}º{lat[1]:.0f}'{lat[2]}\"{lat_ref}"
-    return f"{maps}{urllib.parse.quote_plus(link)}"
+    if not (long or long_ref or lat or lat_ref):
+        return "Could not find GPS data."
+    else:
+        maps: str = "https://google.com/maps/place/"
+        link = f"{long[0]:.0f}º{long[1]:.0f}'{long[2]}\"{long_ref} {lat[0]:.0f}º{lat[1]:.0f}'{lat[2]}\"{lat_ref}"
+        return f"{maps}{urllib.parse.quote_plus(link)}"
 
 
 if __name__ == "__main__":
