@@ -7,8 +7,8 @@ import urllib.parse
 
 from absl import app, flags, logging
 from exif import Image
-from PIL import Image
-from PIL.PngImagePlugin import PngImageFile, PngInfo
+# from PIL import Image
+# from PIL.PngImagePlugin import PngImageFile
 
 
 logging.get_absl_handler().setFormatter(None)
